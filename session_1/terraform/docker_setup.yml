@@ -1,0 +1,385 @@
+ ---
+# Set up the Repository
+
+- name: Install Docker packages
+
+
+- block:
+    - name: Install Docker packages
+      win_path:
+        name: PATH
+        elements: 'C:\Program Files\LockHunter'
+        scope: machine
+        state: present
+
+#     - name: Stop Weblogic server
+#       when: wl_app_name is defined
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\stop{{ wl_app_name }}.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     - name: stop weblogic admin server
+#       when: is_admin is defined and is_admin
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\stopAdminServer.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     - name: make sure no process using resources
+#       win_shell: LockHunter.exe /silent /kill /exit 'D:\resources\master\Version{{ unisfair_env }}'
+#       args:
+#         chdir: 'C:\Program Files\LockHunter'
+#       become: yes
+
+#     - name: make sure no process using app
+#       win_shell: LockHunter.exe /silent /kill /exit 'D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}'
+#       args:
+#         chdir: 'C:\Program Files\LockHunter'
+#       become: yes
+
+#     - name: Backup resources files
+#       win_copy:
+#         src: D:\resources\master\Version{{ unisfair_env }}\
+#         dest: D:\resources\master\Version{{ unisfair_env }}-{{ tag }}-rollback
+#         remote_src: yes
+#       become: yes
+#       args:
+#         creates: D:\resources\master\Version{{ unisfair_env }}-{{ tag }}-rollback
+
+#     - name: Backup WL files
+#       win_copy:
+#         src: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}-{{ tag }}-rollback
+#         remote_src: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}-{{ tag }}-rollback
+
+#     - name: Backup lib files
+#       win_copy:
+#         src: D:\bea12\oracle\Middleware\domains\Unisfair\lib
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\lib-{{ tag }}-rollback
+#         remote_src: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\lib-{{ tag }}-rollback
+
+#     - name: Remove build folder
+#       win_file:
+#         path: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}
+#         state: absent
+
+#     - name: Remove lib folder
+#       win_file:
+#         path: D:\bea12\oracle\Middleware\domains\Unisfair\lib
+#         state: absent
+
+#     - name: Copy WL files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\ejbJar\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}
+
+#     - name: Copy Prop files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\Prop\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\classes
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\classes
+
+#     - name: Copy Servlet files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\Servlet\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\UnisfairWebApp
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\UnisfairWebApp
+
+#     - name: Copy HTML5 files inplace
+#       win_copy:
+#         src: C:\Temp\UnisfairWebApp-temp\{{ item }}\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\UnisfairWebApp\{{ item }}\
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\UnisfairWebApp
+#       with_items:
+#         - admin
+#         - HTML5Microsite
+#         - HTML5Portal
+#         - HTML5Profile
+#         - HTML5Studio
+#         - HTML5WelcomeCenter
+#         - ICE
+#         - IWS
+#         - IWS_V1
+  
+#     - name: Copy Unisfair Lib files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\UnisfairEjbApp\lib\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\lib
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\lib
+
+#     - name: Copy Lib files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Lib\
+#         dest: D:\Bea12\oracle\Middleware\domains\Unisfair\lib
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\Bea12\oracle\Middleware\domains\Unisfair\lib
+  
+#     - name: Copy Slideshows Resource files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\SlideShow\
+#         dest: D:\resources\master\Version{{ unisfair_env }}\Slideshows
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\resources\master\Version{{ unisfair_env }}\Slideshows
+
+#     - name: Copy GeneratorTemplates Resource files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\GeneratorTemplates\
+#         dest: D:\resources\master\Version{{ unisfair_env }}\generatortemplates
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\resources\master\Version{{ unisfair_env }}\Slideshows
+
+#     - name: Copy META-INF files inplace
+#       win_copy:
+#         src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\META-INF_for_prod\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\META-INF
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+#       args:
+#         creates: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\META-INF
+        
+#     - name: Copy devLoginPage jsp's into UnisfairWebApp
+#       win_copy:
+#         src: D:\Bea12\Oracle\Middleware\domains\Unisfair\devLoginPage_files/
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\UnisfairWebApp\
+#         force: true
+#         remote_src: yes
+#         purge: yes
+#         recurse: yes
+#       become: yes
+
+#     # - name: Copy KeyStore inplace
+#     #   win_copy:
+#     #     src: C:\Temp\{{ repo }}\wl-{{ tag }}\Bin\KeyStore/
+#     #     dest: D:\bea12\oracle\Middleware\domains\Unisfair\servers\{{ wl_app_name }}\security\
+#     #     force: true
+#     #     remote_src: yes
+#     #     purge: yes
+#     #     recurse: yes
+#     #   become: yes
+
+#     - name: Delete hibernate.cfg.xml
+#       win_file:
+#         path: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\classes\hibernate.cfg.xml
+#         state: absent
+
+#     - name: Copy and rename hibernate.cfg.xml
+#       win_copy:
+#         src: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\classes\hibernate.cfg.xml.{{ serverID }}
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}\APP-INF\classes\hibernate.cfg.xml
+#         remote_src: yes
+
+#     - name: Cleanup downloaded files
+#       win_file:
+#         path: C:\Temp\{{ repo }}
+#         state: absent
+  
+#     # - name: start weblogic admin servers
+#     #   when: is_admin is defined and is_admin
+#     #   win_psexec:
+#     #     command: D:\Bea12\oracle\Middleware\domains\Unisfair\startWebLogic.cmd
+#     #     interactive: yes
+#     #     wait: no
+#     #     session: "{{ SessionID_out.stdout }}"
+#     #     chdir: D:\Bea12\oracle\Middleware\domains\Unisfair
+#     #   become: yes
+  
+#     - name: start weblogic admin servers
+#       when: is_admin is defined and is_admin
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\startAdminServer.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+  
+#     # - name: check weblogic admin servers
+#     #   when: is_admin is defined and is_admin
+#     #   win_wait_for:
+#     #     host: "{{ inventory_hostname }}"
+#     #     port: 7101
+#     #     state: started
+  
+#     - name: Start Weblogic server
+#       when: wl_app_name is defined
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\start{{ wl_app_name }}.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+  
+#     # - name: check weblogic servers
+#     #   when: wl_app_name is defined
+#     #   win_command: wlst.cmd C:\Install\WLStatusScripts\script.py
+#     #   register: output_check
+#     #   until: ("RUNNING" in output_check.stdout)
+#     #   retries: 15
+#     #   delay: 15
+#     #   args:
+#     #     chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#     #   become: yes
+  
+#   rescue:
+#     - name: Set failure status
+#       set_fact:
+#         failed_var: true
+
+#     - name: Stop Weblogic server
+#       when: wl_app_name is defined
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\stop{{ wl_app_name }}.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     - name: stop weblogic admin servers
+#       when: is_admin is defined and is_admin
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\stopAdminServer.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     - name: rollback resources files
+#       win_copy:
+#         src: D:\resources\master\Version{{ unisfair_env }}-{{ tag }}-rollback\
+#         dest: D:\resources\master\Version{{ unisfair_env }}
+#         remote_src: yes
+#       become: yes
+
+#     - name: rollback WL files
+#       win_copy:
+#         src: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}-{{ tag }}-rollback\
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}
+#         remote_src: yes
+#       become: yes
+
+#     - name: rollback lib files
+#       win_copy:
+#         dest: D:\bea12\oracle\Middleware\domains\Unisfair\lib-{{ tag }}-rollback
+#         src: D:\bea12\oracle\Middleware\domains\Unisfair\lib
+#         remote_src: yes
+#       become: yes
+  
+#     ## - name: start weblogic admin servers
+#     #   when: is_admin is defined and is_admin
+#     #   win_psexec:
+#     #     command: D:\Bea12\oracle\Middleware\domains\Unisfair\startWebLogic.cmd
+#     #     interactive: yes
+#     #     wait: no
+#     #     session: "{{ SessionID_out.stdout }}"
+#     #     chdir: D:\Bea12\oracle\Middleware\domains\Unisfair
+#     #   become: yes
+  
+#     - name: start weblogic admin servers
+#       when: is_admin is defined and is_admin
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\startAdminServer.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     # - name: check weblogic admin servers
+#     #   when: is_admin is defined and is_admin
+#     #   win_wait_for:
+#     #     host: "{{inventory_hostname}}"
+#     #     port: 7101
+#     #     state: started
+  
+#     ## - name: start weblogic servers
+#     #   when: wl_app_name is defined
+#     #   win_psexec:
+#     #     command: D:\Bea12\oracle\Middleware\domains\Unisfair\start{{ wl_app_name }}.cmd
+#     #     interactive: yes
+#     #     wait: no
+#     #     session: "{{ SessionID_out.stdout }}"
+#     #     chdir: D:\Bea12\oracle\Middleware\domains\Unisfair
+#     #   become: yes
+  
+#     - name: Start Weblogic servers
+#       when: wl_app_name is defined
+#       win_command: wlst.cmd D:\bea12\oracle\Middleware\domains\Unisfair\start{{ wl_app_name }}.py
+#       args:
+#         chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#       become: yes
+
+#     # - name: check weblogic servers
+#     #   when: wl_app_name is defined
+#     #   win_command: wlst.cmd C:\Install\WLStatusScripts\script.py
+#     #   register: output_check
+#     #   until: ("RUNNING" in output_check.stdout)
+#     #   retries: 15
+#     #   delay: 15
+#     #   args:
+#     #     chdir: d:\bea12\oracle\Middleware\oracle_common\common\bin
+#     #   become: yes
+
+#   always:
+#     - name: cleanup resource rollback folders
+#       win_file:
+#         path: D:\resources\master\Version{{ unisfair_env }}-{{ tag }}-rollback
+#         state: absent
+
+#     - name: cleanup wl rollback folders
+#       win_file:
+#         path: D:\bea12\oracle\Middleware\domains\Unisfair\Applications\Version{{ unisfair_env }}-{{ tag }}-rollback
+#         state: absent
+
+#     - name: cleanup lib rollback folders
+#       win_file:
+#         path: D:\bea12\oracle\Middleware\domains\Unisfair\lib-{{ tag }}-rollback
+#         state: absent
+
+#     - name: check if failed
+#       fail:
+#         msg: "Failed"
+#       when: failed_var is defined and failed_var
