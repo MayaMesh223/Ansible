@@ -1,0 +1,12 @@
+ ---
+- name: Install Docker packages
+
+
+- block:
+    - name: Install Docker packages
+      win_path:
+        name: PATH
+        elements: 'C:\Program Files\LockHunter'
+        scope: machine
+        state: present
+
