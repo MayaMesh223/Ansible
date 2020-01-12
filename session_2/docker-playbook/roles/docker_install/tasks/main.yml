@@ -1,0 +1,10 @@
+---
+- name: Run Redhat tasks and vars
+  include_tasks: "docker_redhat.yml"
+  include_vars: "redhat_vars.yml"
+  when: ansible_os_family == 'RedHat'
+
+- name: Run Ubuntu tasks and vars
+  include_tasks: "docker_redhat.yml"
+  include_vars: "redhat_vars.yml"
+  when: ansible_os_family == 'Debian'

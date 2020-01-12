@@ -1,6 +1,6 @@
 ---
 - name: Update apt packages
-  become: true
+  become: yes
   apt:
     upgrade: yes
     update_cache: yes
@@ -38,10 +38,11 @@
     name: docker-ce
     state: latest
     notify:
-     - restart docker
+     - Docker restart
 
 - name: Add user to Docker group
   user:
-    name: ubuntu
+    name: "{{ docker_user }}"
     groups: docker
     append: yes
+  become: yes

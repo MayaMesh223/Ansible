@@ -1,0 +1,7 @@
+---
+packages:
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+
+docker_user: ["ec2-user"]
